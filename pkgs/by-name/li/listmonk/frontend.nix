@@ -14,7 +14,7 @@ mkYarnPackage {
 
   offlineCache = fetchYarnDeps {
     yarnLock = "${src}/frontend/yarn.lock";
-    hash = "sha256-TdrglyRtb2Q8SFtoiCoDj/zBV2+7DwzIm/Fzlt0ZvSo=";
+    hash = "sha256-2STFJtlneyR6QBsy/RVIINV/0NMggnfZwyz1pki8iPk=";
   };
 
   configurePhase = ''
@@ -26,8 +26,12 @@ mkYarnPackage {
   '';
 
   installPhase = ''
+    runHook preInstall
+
     mkdir $out
-    cp -R dist/* $out
+    cp -r dist/* $out
+
+    runHook postInstall
   '';
 
   doDist = false;
